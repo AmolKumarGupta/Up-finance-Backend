@@ -1,11 +1,13 @@
-import express, {Express, Request, Response} from "express";
+import express, { type Express, type Request, type Response } from 'express'
+import * as dotenv from 'dotenv'
 
-const app: Express = express();
+dotenv.config()
+const app: Express = express()
 
 app.get('/', (req: Request, res: Response) => {
-    res.send("html");
-});
+  res.send('html')
+})
 
-app.listen(8080, () => {
-    console.log("server is listening");
-});
+app.listen(process.env.PORT, () => {
+  console.log('server is listening')
+})
