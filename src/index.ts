@@ -4,6 +4,8 @@ import helmet from 'helmet'
 import bodyParser from 'body-parser'
 import session from 'express-session'
 import Logger from './utils/Logger'
+import mongoose from 'mongoose'
+import MongoStore from 'connect-mongo'
 
 dotenv.config()
 const app: Express = express()
@@ -14,7 +16,8 @@ app.use(
   session({
     secret: process.env.SECRET_KEY,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
   })
 )
 
@@ -27,6 +30,6 @@ app.use((err: { message: string }, req: Request, res: Response, next: NextFuncti
   Logger.error(`${req.method} ${req.originalUrl}: ${err.message}`)
 })
 
-app.listen(process.env.PORT, () => {
-  console.log('server is listening')
-})
+mongoose.connect(process.env.MONGO_URI as string).then(() => {
+  app.listen(process.env.PORT)
+});
