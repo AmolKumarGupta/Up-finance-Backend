@@ -1,12 +1,11 @@
 import { type NextFunction, type Request, type Response } from 'express'
 import User from '../models/User'
-import Logger from '../utils/Logger'
 import { type Document } from 'mongodb'
 import jwt from 'jsonwebtoken'
-import { IRequest } from '../interfaces/myExpress'
+import { type IRequest } from '../interfaces/myExpress'
 
 export default class Auth {
-  public get (): Auth  {
+  public get (): Auth {
     return this
   }
 
@@ -21,14 +20,42 @@ export default class Auth {
         })
       })
       .catch((err: Error) => {
-        Logger.error(err.message)
-        return res.status(500).json({
-          err: err.message
-        })
+        next(err)
       })
   }
 
-	public static login(req: IRequest, res: Response, next: NextFunction) {
-		return res.json(req.user);
-	}
+  public static login (req: IRequest, res: Response, next: NextFunction): void {
+    User.findOne({
+      name: req.body.name
+    })
+      .exec()
+      .then((doc: Document | null) => {
+        if (doc == null) {
+          return res.status(400).json({ err: 'user not found' })
+        }
+
+        doc.comparePassword(req.body.password, (err: Error | null, isMatch: boolean) => {
+          if (err != null) {
+            next(err); return
+          }
+
+          if (!isMatch) {
+            return res.status(400).json({ err: 'incorrect password' })
+          }
+
+          const token = jwt.sign(
+            { ...doc._doc, _id: doc._id.toString() },
+            process.env.SECRET_KEY,
+            { expiresIn: '1h' }
+          )
+
+          return res.json({
+            token
+          })
+        })
+      })
+      .catch((err: Error) => {
+        next(err)
+      })
+  }
 }

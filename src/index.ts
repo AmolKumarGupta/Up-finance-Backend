@@ -29,7 +29,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/users', AuthRouter)
 
 app.use((err: { message: string }, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).send('Could not perform the calculation!')
+  res.status(500).send('Server Error!')
   Logger.error(`${req.method} ${req.originalUrl}: ${err.message}`)
 })
 
