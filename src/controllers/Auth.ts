@@ -3,10 +3,10 @@ import User from '../models/User'
 import Logger from '../utils/Logger'
 import { type Document } from 'mongodb'
 import jwt from 'jsonwebtoken'
-import { IRequest } from '../interfaces/myExpress'
+import { type IRequest } from '../interfaces/myExpress'
 
 export default class Auth {
-  public get (): Auth  {
+  public get (): Auth {
     return this
   }
 
@@ -28,7 +28,7 @@ export default class Auth {
       })
   }
 
-	public static login(req: IRequest, res: Response, next: NextFunction) {
-		return res.json(req.user);
-	}
+  public static login (req: IRequest, res: Response, next: NextFunction): Response {
+    return res.json(req.user)
+  }
 }
