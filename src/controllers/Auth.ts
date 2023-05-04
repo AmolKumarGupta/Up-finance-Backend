@@ -28,7 +28,35 @@ export default class Auth {
       })
   }
 
-  public static login (req: IRequest, res: Response, next: NextFunction): Response {
-    return res.json(req.user)
+  public static login (req: IRequest, res: Response, next: NextFunction): void {
+    User.findOne({
+      name: req.body.name
+    })
+    .exec()
+    .then((doc: Document|null) => {
+      if (!doc) {
+        return res.status(400).json({ err: "user not found" });
+      }
+
+      doc.comparePassword(req.body.password, (err: Error|null, isMatch: boolean) => {
+        if (err) {
+          return next(err)
+        }
+
+        if (! isMatch) {
+          return res.status(400).json({ err: "incorrect password" })
+        }
+        
+        const token = jwt.sign(
+          { ...doc._doc, _id: doc._id.toString() }, 
+          process.env.SECRET_KEY, 
+          { expiresIn: '1h' }
+        )
+
+        return res.json({
+          token
+        })
+      })
+    })
   }
 }
