@@ -1,6 +1,6 @@
-import { buildSchema } from "graphql"
+import { buildSchema } from 'graphql'
 
-const schema =  buildSchema(`
+const schema = buildSchema(`
     type RootQuery {
         login(name: String!, password: String!): ID!
     }

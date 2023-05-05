@@ -1,4 +1,4 @@
-type loginInput = {
-    name: string,
-    password: string
+interface loginInput {
+  name: string
+  password: string
 }
