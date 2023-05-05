@@ -6,6 +6,9 @@ import session from 'express-session'
 import Logger from './utils/Logger'
 import mongoose from 'mongoose'
 import MongoStore from 'connect-mongo'
+import { createHandler } from 'graphql-http/lib/use/express'
+import mySchema from './graphql/schema'
+import resolver from './graphql/resolver'
 
 import AuthRouter from './routes/auth'
 
@@ -23,6 +26,11 @@ app.use(
   })
 )
 
+app.all('/api', createHandler({
+  schema: mySchema,
+  rootValue: resolver
+}))
+
 app.get('/', (req: Request, res: Response) => {
   res.send('html')
 })
@@ -33,8 +41,9 @@ app.use((err: { message: string }, req: Request, res: Response, next: NextFuncti
   Logger.error(`${req.method} ${req.originalUrl}: ${err.message}`)
 })
 
-mongoose.connect(process.env.MONGO_URI as string).then(() => {
-  app.listen(process.env.PORT)
-}).catch((err: Error) => {
-  Logger.error(err.message)
-})
+mongoose.connect(process.env.MONGO_URI as string)
+  .then(() => {
+    app.listen(process.env.PORT)
+  }).catch((err: Error) => {
+    Logger.error(err.message)
+  })
