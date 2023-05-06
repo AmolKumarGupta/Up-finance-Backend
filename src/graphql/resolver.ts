@@ -25,6 +25,24 @@ const resolver = {
     )
 
     return token
+  },
+
+  signup: async (signUpInput: signUpInput, req: Request) => {
+    const existingUser: Document | null = await User.findOne({
+      $or: [
+        { name: signUpInput.name },
+        { email: signUpInput.email }
+      ]
+    }).exec()
+
+    if (existingUser != null) {
+      throw new Error('name or email is already existed')
+    }
+
+    const user = new User(signUpInput)
+    const doc: Document | null = await user.save()
+    const token = jwt.sign({ ...doc._doc, _id: doc._id.toString() }, process.env.SECRET_KEY, { expiresIn: '1h' })
+    return token
   }
 }
 

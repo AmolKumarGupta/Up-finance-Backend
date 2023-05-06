@@ -5,8 +5,13 @@ const schema = buildSchema(`
         login(name: String!, password: String!): ID!
     }
 
+    type RootMutation {
+        signup(name: String!, email: String!, password: String!): ID!
+    }
+
     schema {
-        query: RootQuery
+        query: RootQuery,
+        mutation: RootMutation
     }
 `)
 
