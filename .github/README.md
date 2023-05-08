@@ -13,7 +13,7 @@ Frontend of the web app is written in React. You can find it [here.](https://git
     ```
     > devDependencies are needed for typescript
 
-3. Make `.env` from `.env.example`
+3. Make `.env` from `.env.example` and add your mongodb credentail in it.
     ```
     mv .env.example .env
     ```
