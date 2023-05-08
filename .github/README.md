@@ -31,3 +31,6 @@ Frontend of the web app is written in React. You can find it [here.](https://git
 
 ## For Contributor
 Please read [CONTRIBUTING.md](./CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+
+## Bugs and Issues
+Submit your [issue](https://github.com/AmolKumarGupta/Up-finance-Backend/issues)
