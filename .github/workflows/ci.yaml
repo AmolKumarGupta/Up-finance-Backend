@@ -14,7 +14,6 @@ jobs:
       with:
         node-version: '18.x'
     - run: npm ci
-    - run: npm install --save-dev
 
     - name: Lint
       run: npm run lint -- --fix
