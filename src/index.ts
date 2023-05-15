@@ -6,6 +6,7 @@ import session from 'express-session'
 import Logger from './utils/Logger'
 import mongoose from 'mongoose'
 import MongoStore from 'connect-mongo'
+import cors from 'cors'
 import { createHandler } from 'graphql-http/lib/use/express'
 import mySchema from './graphql/schema'
 import resolver from './graphql/resolver'
@@ -14,6 +15,7 @@ import AuthRouter from './routes/auth'
 
 dotenv.config()
 const app: Express = express()
+app.use(cors())
 app.use(helmet())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
