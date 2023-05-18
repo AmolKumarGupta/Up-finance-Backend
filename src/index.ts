@@ -21,8 +21,6 @@ app.all('/api', createHandler({
   rootValue: resolver
 }))
 
-
-
 app.use((err: { message: string }, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send('Server Error!')
   Logger.error(`${req.method} ${req.originalUrl}: ${err.message}`)
