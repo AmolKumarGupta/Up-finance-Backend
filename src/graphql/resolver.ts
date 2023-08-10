@@ -2,6 +2,7 @@ import { type Request } from 'express'
 import User from '../models/User'
 import { type Document } from 'mongodb'
 import jwt from 'jsonwebtoken'
+import Transaction from '../controllers/Transaction'
 
 const resolver = {
   login: async (loginInput: loginInput, req: Request) => {
@@ -43,7 +44,9 @@ const resolver = {
     const doc: Document | null = await user.save()
     const token = jwt.sign({ ...doc._doc, _id: doc._id.toString() }, process.env.SECRET_KEY, { expiresIn: '1h' })
     return token
-  }
+  },
+
+  transaction_create: Transaction.create
 }
 
 export default resolver
