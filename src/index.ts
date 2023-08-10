@@ -8,6 +8,7 @@ import cors from 'cors'
 import { createHandler } from 'graphql-http/lib/use/express'
 import mySchema from './graphql/schema'
 import resolver from './graphql/resolver'
+import auth from './middlewares/auth'
 
 dotenv.config()
 const app: Express = express()
@@ -16,7 +17,7 @@ app.use(helmet())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.all('/api', createHandler({
+app.all('/api', auth, createHandler({
   schema: mySchema,
   rootValue: resolver
 }))
