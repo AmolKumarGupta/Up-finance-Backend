@@ -6,6 +6,10 @@ export default class TransactionController {
     return this
   }
 
+  public static async all (req: Request): Promise<unknown> {
+    return await Transaction.find({})
+  }
+
   public static async create (input: transactionInput, req: Request): Promise<unknown> {
     const transaction = new Transaction({
       name: input.name,

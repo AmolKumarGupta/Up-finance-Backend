@@ -46,6 +46,7 @@ const resolver = {
     return token
   },
 
+  transactions: TransactionController.all,
   transaction_create: TransactionController.create
 }
 

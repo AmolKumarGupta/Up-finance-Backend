@@ -1,8 +1,16 @@
 import { buildSchema } from 'graphql'
 
 const schema = buildSchema(`
+    type Transaction {
+        _id: ID,
+        name: String,
+        type: String,
+        amount: Float
+    }
+
     type RootQuery {
-        login(name: String!, password: String!): ID!
+        login(name: String!, password: String!): ID!,
+        transactions: [Transaction]
     }
 
     type RootMutation {
