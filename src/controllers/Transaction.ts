@@ -1,11 +1,19 @@
+import { type Document } from 'mongoose'
+import Transaction from '../models/Transaction'
 
-export default class Transaction {
-  public get (): Transaction {
+export default class TransactionController {
+  public get (): TransactionController {
     return this
   }
 
   public static async create (input: transactionInput, req: Request): Promise<unknown> {
-    console.log({ input, req })
-    return 1
+    const transaction = new Transaction({
+      name: input.name,
+      type: input.type,
+      amount: input.amount
+    })
+
+    const doc: Document = await transaction.save()
+    return doc._id.toString()
   }
 }

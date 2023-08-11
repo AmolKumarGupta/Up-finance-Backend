@@ -2,7 +2,7 @@ import { type Request } from 'express'
 import User from '../models/User'
 import { type Document } from 'mongodb'
 import jwt from 'jsonwebtoken'
-import Transaction from '../controllers/Transaction'
+import TransactionController from '../controllers/Transaction'
 
 const resolver = {
   login: async (loginInput: loginInput, req: Request) => {
@@ -46,7 +46,7 @@ const resolver = {
     return token
   },
 
-  transaction_create: Transaction.create
+  transaction_create: TransactionController.create
 }
 
 export default resolver

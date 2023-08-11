@@ -3,10 +3,6 @@ import jwt from 'jsonwebtoken'
 import { type IRequest } from '../interfaces/myExpress'
 
 export default function auth (req: IRequest, res: Response, next: NextFunction): Response | NextFunction {
-  // const query = req.body.query.match(/\{(.*)login\((.*)\)(.*)\}/mg)
-  // console.log(query)
-  // return res.status(401).json({ err: 'test' })
-
   const authHeader = req.headers.authorization
   const token = authHeader?.split(' ')[1]
 
