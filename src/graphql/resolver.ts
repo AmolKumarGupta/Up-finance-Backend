@@ -47,7 +47,8 @@ const resolver = {
   },
 
   transactions: TransactionController.all,
-  transaction_create: TransactionController.create
+  transaction_create: TransactionController.create,
+  transaction_delete: TransactionController.delete
 }
 
 export default resolver

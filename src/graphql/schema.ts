@@ -15,7 +15,8 @@ const schema = buildSchema(`
 
     type RootMutation {
         signup(name: String!, email: String!, password: String!): ID!,
-        transaction_create(name: String!, type: String, amount: Float!): ID!
+        transaction_create(name: String!, type: String, amount: Float!): ID!,
+        transaction_delete(id: String!): Boolean!
     }
 
     schema {

@@ -20,4 +20,18 @@ export default class TransactionController {
     const doc: Document = await transaction.save()
     return doc._id.toString()
   }
+
+  public static async delete (input: { id: string }, req: Request): Promise<boolean> {
+    if (input.id === '') {
+      return false
+    }
+    const result = Transaction.deleteOne({ _id: input.id })
+
+    return await result.then((records) => {
+      return true
+    // eslint-disable-next-line n/handle-callback-err
+    }).catch((err) => {
+      return false
+    })
+  }
 }
