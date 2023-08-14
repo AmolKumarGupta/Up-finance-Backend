@@ -8,3 +8,9 @@ interface signUpInput {
   email: string
   password: string
 }
+
+interface transactionInput {
+  name: string
+  type: string
+  amount: number
+}
