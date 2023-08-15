@@ -14,6 +14,8 @@ const TransactionSchema = new Schema({
     type: Number,
     required: true
   }
+}, {
+  timestamps: true
 })
 
 export default mongoose.model('Transaction', TransactionSchema)
