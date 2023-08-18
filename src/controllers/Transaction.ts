@@ -6,8 +6,21 @@ export default class TransactionController {
     return this
   }
 
-  public static async all (req: Request): Promise<unknown> {
-    return await Transaction.find({})
+  public static async all (input: { limit?: number, page?: number }, req: Request): Promise<unknown> {
+    let limit = 25
+    let offset = 0
+
+    if (input.limit !== undefined && input.limit > 0) {
+      limit = input.limit
+    }
+    if (input.page !== undefined && input.page > 0) {
+      offset = (input.page - 1) * limit
+    }
+
+    const data = await Transaction.find({}).limit(limit).skip(offset)
+    const totalCount = await Transaction.count()
+
+    return { data, totalPages: Math.ceil(totalCount / limit) }
   }
 
   public static async create (input: transactionInput, req: Request): Promise<unknown> {
