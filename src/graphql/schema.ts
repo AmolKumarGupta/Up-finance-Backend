@@ -8,9 +8,14 @@ const schema = buildSchema(`
         amount: Float
     }
 
+    type TransactionSlice {
+        data: [Transaction],
+        totalPages: Int
+    }
+
     type RootQuery {
         login(name: String!, password: String!): ID!,
-        transactions: [Transaction]
+        transactions(limit: Int, page: Int): TransactionSlice
     }
 
     type RootMutation {
