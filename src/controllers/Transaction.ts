@@ -17,7 +17,7 @@ export default class TransactionController {
       offset = (input.page - 1) * limit
     }
 
-    const data = await Transaction.find({}).limit(limit).skip(offset)
+    const data = await Transaction.find({}).limit(limit).skip(offset).sort({ _id: -1 })
     const totalCount = await Transaction.count()
 
     return { data, totalPages: Math.ceil(totalCount / limit) }
